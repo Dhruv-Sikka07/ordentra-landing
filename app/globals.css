@@ -3,9 +3,16 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --footer-shell: #f4f1ec;
-  --footer-dots: rgba(15, 23, 42, 0.08);
-  --footer-dots-soft: rgba(34, 52, 84, 0.08);
+  --footer-shell: #f5f5f7;
+  --footer-dots: rgba(15, 23, 42, 0.06);
+  --footer-dots-soft: rgba(34, 52, 84, 0.06);
+  --cursor-x: 50vw;
+  --cursor-y: 50vh;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -14,48 +21,105 @@
   --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
+  background-color: var(--footer-shell);
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--footer-dots) 1.2px, transparent 0);
+  background-size: 18px 18px;
   color: var(--foreground);
   font-family: "Intex", var(--font-inter), Helvetica, sans-serif;
 }
 
-.footer-shell {
-  background-color: var(--footer-shell);
-  background-image:
-    radial-gradient(circle at 1px 1px, var(--footer-dots) 1.2px, transparent 0),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(244, 241, 236, 0.9));
-  background-size: 18px 18px, 100% 100%;
+.hero-stage {
+  background: transparent;
 }
 
-.footer-panel {
+.hero-noise {
   background-image:
-    radial-gradient(
-      circle at 1px 1px,
-      var(--footer-dots-soft) 1px,
-      transparent 0
-    ),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.68));
-  background-size: 16px 16px, 100% 100%;
+    radial-gradient(rgba(70, 70, 70, 0.1) 0.7px, transparent 0.7px),
+    radial-gradient(rgba(255, 255, 255, 0.85) 0.7px, transparent 0.7px);
+  background-position: 0 0, 4px 4px;
+  background-size: 8px 8px;
+}
+
+.hero-app-badge {
+  box-shadow:
+    0 22px 44px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+section[id],
+footer[id] {
+  scroll-margin-top: 96px;
+}
+
+.footer-copy,
+.footer-copy p,
+.footer-copy h2,
+.footer-copy h3,
+.footer-copy span,
+.footer-copy a,
+.footer-copy svg {
+  color: #000 !important;
+}
+
+.footer-headline {
+  color: #000 !important;
 }
 
 .footer-stage {
-  background-color: rgba(255, 255, 255, 0.78);
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(36, 52, 84, 0.08) 1px, transparent 0),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72));
-  background-size: 14px 14px, 100% 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .footer-tile {
-  box-shadow:
-    0 22px 30px rgba(15, 23, 42, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  box-shadow: none;
+}
+
+.dotted-card {
+  background-color: rgba(255, 255, 255, 0.82);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.06) 1px, transparent 0);
+  background-size: 14px 14px;
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 700ms ease,
+    transform 700ms ease;
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cursor-glow {
+  position: absolute;
+  left: calc(var(--cursor-x) - 16rem);
+  top: calc(var(--cursor-y) - 16rem);
+  width: 32rem;
+  height: 32rem;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(96, 165, 250, 0.42) 0%, rgba(96, 165, 250, 0) 16%),
+    radial-gradient(circle at 68% 35%, rgba(167, 139, 250, 0.34) 0%, rgba(167, 139, 250, 0) 14%),
+    radial-gradient(circle at 42% 70%, rgba(125, 211, 252, 0.26) 0%, rgba(125, 211, 252, 0) 12%),
+    radial-gradient(circle at 58% 62%, rgba(192, 132, 252, 0.24) 0%, rgba(192, 132, 252, 0) 11%),
+    radial-gradient(circle, rgba(96, 165, 250, 0.32) 0%, rgba(125, 211, 252, 0.2) 28%, rgba(167, 139, 250, 0.14) 46%, rgba(255, 255, 255, 0) 72%);
+  filter: blur(56px);
+  opacity: 1;
+  transition:
+    left 80ms linear,
+    top 80ms linear;
+  will-change: left, top;
+}
+
+@media (hover: none) {
+  .cursor-glow {
+    display: none;
+  }
 }
