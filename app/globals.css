@@ -13,12 +13,14 @@
 html {
   scroll-behavior: smooth;
   color-scheme: light;
+  overflow-x: clip;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
+  --font-mono: var(--font-mono);
 }
 
 body {
@@ -27,7 +29,16 @@ body {
     radial-gradient(circle at 1px 1px, var(--footer-dots) 1.2px, transparent 0);
   background-size: 18px 18px;
   color: var(--foreground);
-  font-family: "Intex", var(--font-inter), Helvetica, sans-serif;
+  font-family: "Inter", var(--font-inter), Helvetica, sans-serif;
+  overflow-x: clip;
+}
+
+.font-display-copy {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.font-mono-copy {
+  font-family: var(--font-mono), "JetBrains Mono", monospace;
 }
 
 .hero-stage {
@@ -121,5 +132,32 @@ footer[id] {
 @media (hover: none) {
   .cursor-glow {
     display: none;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-section {
+    padding-bottom: 3rem;
+  }
+
+  .hero-shell {
+    min-height: 58rem;
+    padding-top: 1.5rem;
+    padding-bottom: 6rem;
+  }
+
+  .hero-content {
+    max-width: 36rem;
+    padding-top: 8rem;
+  }
+
+  .hero-title {
+    font-size: 3.25rem;
+    line-height: 0.98;
+  }
+
+  .hero-float-left,
+  .hero-float-right {
+    display: none !important;
   }
 }
