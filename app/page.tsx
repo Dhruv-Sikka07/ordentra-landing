@@ -93,15 +93,38 @@ const footerLinkGroups = [
       { label: "Procurement", href: "#features" },
       { label: "Inventory Control", href: "#features" },
       { label: "OPEX Intelligence", href: "#features" },
+      { label: "Integrations", href: "#integrations" },
+      { label: "AI Modules (2026)", href: "#features" },
     ],
   },
   {
-    title: "Solutions",
+    title: "Industries",
     links: [
       { label: "Manufacturing", href: "#solutions" },
       { label: "Retail & CPG", href: "#solutions" },
       { label: "Healthcare", href: "#solutions" },
       { label: "Logistics", href: "#solutions" },
+      { label: "Energy & Utilities", href: "#solutions" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About ORDENTRA", href: "#" },
+      { label: "Customers", href: "#customers" },
+      { label: "Careers", href: "#" },
+      { label: "Press", href: "#" },
+      { label: "Contact Sales", href: "#contact" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { label: "Documentation", href: "#" },
+      { label: "API Reference", href: "#" },
+      { label: "Analyst Reports", href: "#" },
+      { label: "Security & Trust", href: "#security" },
+      { label: "Status", href: "#" },
     ],
   },
 ];
@@ -166,49 +189,49 @@ const floatingTiles: FloatingTile[] = [
   {
     label: "Orders",
     icon: Wallet,
-    className: "left-[5%] top-[20%] rotate-[-8deg]",
+    className: "left-[2%] top-[20%] rotate-[-8deg]",
     accentClass: "bg-sky-100 text-sky-600",
   },
   {
     label: "Procurement",
     icon: BadgeCheck,
-    className: "left-[17%] top-[52%] rotate-[10deg]",
+    className: "left-[14%] top-[52%] rotate-[10deg]",
     accentClass: "bg-emerald-100 text-emerald-600",
   },
   {
     label: "Trade Ops",
     icon: Building2,
-    className: "left-[29%] top-[18%] rotate-[-12deg]",
+    className: "left-[26%] top-[18%] rotate-[-12deg]",
     accentClass: "bg-violet-100 text-violet-600",
   },
   {
     label: "Approvals",
     icon: Workflow,
-    className: "left-[41%] top-[50%] rotate-[8deg]",
+    className: "left-[38%] top-[50%] rotate-[8deg]",
     accentClass: "bg-amber-100 text-amber-600",
   },
   {
     label: "Inventory",
     icon: Package,
-    className: "left-[53%] top-[18%] rotate-[6deg]",
+    className: "left-[50%] top-[18%] rotate-[6deg]",
     accentClass: "bg-cyan-100 text-cyan-700",
   },
   {
     label: "OPEX",
     icon: ClipboardCheck,
-    className: "left-[65%] top-[52%] rotate-[-10deg]",
+    className: "left-[62%] top-[52%] rotate-[-10deg]",
     accentClass: "bg-rose-100 text-rose-600",
   },
   {
     label: "Insights",
     icon: ChartColumnIncreasing,
-    className: "left-[77%] top-[20%] rotate-[10deg]",
+    className: "left-[74%] top-[20%] rotate-[10deg]",
     accentClass: "bg-indigo-100 text-indigo-600",
   },
   {
     label: "AI 2026",
     icon: CalendarRange,
-    className: "left-[89%] top-[52%] rotate-[-6deg]",
+    className: "left-[86%] top-[52%] rotate-[-6deg]",
     accentClass: "bg-orange-100 text-orange-600",
   },
 ];
@@ -540,7 +563,9 @@ function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5">
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-3 rounded-[1.35rem] border border-black/6 bg-white px-3 py-3 shadow-[0_18px_40px_rgba(15,23,42,0.08)] sm:px-5 lg:px-6">
+      <div className="relative z-50 mx-auto flex max-w-screen-xl items-center justify-between gap-3 rounded-xl border border-black/6 bg-white px-3 py-3 shadow-xl sm:px-5 lg:px-6">
+        
+        {/* Logo */}
         <a
           href="#"
           className="font-display-copy flex items-center gap-3 text-[15px] font-semibold tracking-[0.12em] text-[#161616]"
@@ -549,6 +574,7 @@ function SiteHeader() {
           ORDENTRA
         </a>
 
+        {/* Desktop Nav */}
         <nav className="hidden flex-1 items-center justify-center gap-8 text-[11px] font-medium text-slate-500 lg:flex">
           {navLinks.map((link) => (
             <a
@@ -561,6 +587,7 @@ function SiteHeader() {
           ))}
         </nav>
 
+        {/* Desktop Buttons */}
         <div className="hidden items-center gap-3 sm:flex">
           <a
             href="#contact"
@@ -576,47 +603,87 @@ function SiteHeader() {
           </a>
         </div>
 
-          <button
-            type="button"
-            aria-label={isMobileMenuOpen ? "Close navigation" : "Open navigation"}
-            aria-expanded={isMobileMenuOpen}
-            onClick={() => setIsMobileMenuOpen((open) => !open)}
-            className="relative inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-[0_10px_25px_rgba(15,23,42,0.06)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-slate-300 hover:text-slate-950 lg:hidden"
-          >
-            <Menu
-              className={`absolute h-5 w-5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                isMobileMenuOpen
-                  ? "scale-75 rotate-90 opacity-0"
-                  : "scale-100 rotate-0 opacity-100"
-              }`}
-            />
-            <X
-              className={`absolute h-5 w-5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                isMobileMenuOpen
-                  ? "scale-100 rotate-0 opacity-100"
-                  : "scale-75 -rotate-90 opacity-0"
-              }`}
-            />
-          </button>
-        </div>
+        {/* Mobile Toggle */}
+        <button
+          type="button"
+          aria-label={isMobileMenuOpen ? "Close navigation" : "Open navigation"}
+          aria-expanded={isMobileMenuOpen}
+          onClick={() => setIsMobileMenuOpen((open) => !open)}
+          className="relative inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-[0_10px_25px_rgba(15,23,42,0.06)] transition-all duration-300 ease-in-out hover:border-slate-300 hover:text-slate-950 lg:hidden"
+        >
+          {isMobileMenuOpen ? (
+            <X className="h-5 w-5 text-slate-900 drop-shadow-sm" />
+          ) : (
+            <Menu className="h-5 w-5" />
+          )}
+        </button>
       </div>
 
+      {/* Overlay */}
       <button
         type="button"
         aria-label="Close navigation overlay"
         onClick={() => setIsMobileMenuOpen(false)}
-        className={`fixed inset-0 z-40 bg-white/20 transition-opacity duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+        className={`fixed inset-0 z-40 bg-black/20 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
           isMobileMenuOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
         }`}
       />
+
+      {/* Mobile Menu */}
       <div
-        className={`absolute inset-x-3 top-full z-50 mt-3 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden sm:inset-x-5 ${
+        className={`absolute inset-x-3 top-full z-50 mt-3 transition-all duration-300 ease-in-out lg:hidden sm:inset-x-5 ${
           isMobileMenuOpen
             ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
             : "pointer-events-none -translate-y-2 scale-[0.98] opacity-0"
         }`}
+      >
+        <div className="mx-auto max-w-[1400px] rounded-[1.35rem] border border-black/6 bg-white p-4 shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
+          
+          <nav className="flex flex-col gap-2">
+            {navLinks.map((link, index) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`rounded-xl px-3 py-3 text-sm font-medium text-slate-700 transition-all duration-300 hover:bg-slate-50 hover:text-slate-950 ${
+                  isMobileMenuOpen
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-2 opacity-0"
+                }`}
+                style={{
+                  transitionDelay: isMobileMenuOpen
+                    ? `${index * 40}ms`
+                    : "0ms",
+                }}
+              >
+                {link.label}
+              </a>
+            ))}
+
+            {/* CTA */}
+            <a
+              href="#contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="mt-3 inline-flex items-center justify-center rounded-xl bg-[#2f80ff] px-4 py-3 text-sm font-medium text-white shadow-[0_20px_35px_rgba(47,128,255,0.24)] transition hover:bg-[#1f72f0]"
+            >
+              Book a Demo
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+  );
+}
+    {/* <button
+      type="button"
+      aria-label="Close navigation overlay"
+      onClick={() => setIsMobileMenuOpen(false)}
+      className={`fixed inset-0 z-40 bg-white/20 transition-opacity duration-300 ease-in-out lg:hidden ${isMobileMenuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
+    ></button> */}
+    {/* <div
+        className={`absolute inset-x-3 top-full z-50 mt-3 transition-all duration-300 ease-in-out lg:hidden sm:inset-x-5 ${isMobileMenuOpen ? "pointer-events-auto translate-y-0 scale-100 opacity-100" : "pointer-events-none -translate-y-2 scale-[0.98] opacity-0"}`}
       >
         <div className="mx-auto max-w-[1400px] rounded-[1.35rem] border border-black/6 bg-white p-4 shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
           <nav className="flex flex-col gap-2">
@@ -625,11 +692,7 @@ function SiteHeader() {
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`rounded-xl px-3 py-3 text-sm font-medium text-slate-700 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-slate-50 hover:text-slate-950 ${
-                  isMobileMenuOpen
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-2 opacity-0"
-                }`}
+                className={`rounded-xl px-3 py-3 text-sm font-medium text-slate-700 transition-all duration-300 ease-in-out hover:bg-slate-50 hover:text-slate-950 ${isMobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
                 style={{ transitionDelay: isMobileMenuOpen ? `${index * 35}ms` : "0ms" }}
               >
                 {link.label}
@@ -644,10 +707,7 @@ function SiteHeader() {
             </a>
           </nav>
         </div>
-      </div>
-    </header>
-  );
-}
+      </div> */}
 
 function HeroSection() {
   return (
@@ -1371,8 +1431,8 @@ function FooterSection() {
 
         <div className="px-4 pb-3 pt-8 text-black sm:px-8 sm:pb-4 sm:pt-10">
           <div className="footer-copy flex w-full flex-col gap-10">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start">
-              <div className="footer-copy text-center">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,340px)_1fr] lg:items-start">
+              <div className="footer-copy text-left">
                 <p className="mb-4 inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em]">
                   Built for the Global 2000
                 </p>
@@ -1381,10 +1441,10 @@ function FooterSection() {
                 </h2>
               </div>
 
-              <div className="footer-copy grid grid-cols-1 gap-8 text-center sm:grid-cols-2">
+              <div className="footer-copy grid grid-cols-2 gap-8 text-left sm:grid-cols-4">
                 {footerLinkGroups.map((group) => (
                   <div key={group.title}>
-                    <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em]">
+                    <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-slate-800">
                       {group.title}
                     </h3>
                     <ul className="space-y-3">
@@ -1392,7 +1452,7 @@ function FooterSection() {
                         <li key={link.label}>
                           <a
                             href={link.href}
-                            className="inline-flex items-center justify-center gap-2 text-[15px] transition hover:text-black"
+                            className="inline-flex items-center gap-2 text-[15px] font-medium text-slate-500 transition hover:text-black"
                           >
                             <ArrowRight className="h-4 w-4" />
                             <span>{link.label}</span>
@@ -1409,34 +1469,32 @@ function FooterSection() {
 
             <div className="footer-copy pt-2 text-center">
               <div className="overflow-hidden">
-                <p className="font-display-copy text-[4.8rem] font-semibold leading-none tracking-[0.08em] text-black sm:text-[7rem] md:text-[9rem] lg:text-[12rem]">
+                <p className="font-display-copy text-[clamp(2.5rem,11.5vw,12rem)] font-semibold leading-none tracking-[0.08em] text-black">
                   ORDENTRA
                 </p>
               </div>
             </div>
 
-            <div className="footer-copy flex flex-col gap-4 border-t border-black/6 pt-5 text-sm sm:flex-row sm:items-center sm:justify-between">
-              <p className="max-w-full">&copy; 2026 Ordentra Technologies Pvt. Ltd. All rights reserved.</p>
-              <div className="flex max-w-full flex-wrap items-center gap-5">
-                <a href="#contact" className="transition hover:text-black">
+            <div className="footer-copy flex flex-col gap-6 border-t border-black/6 pt-6 text-sm sm:flex-row sm:items-start sm:justify-between">
+              <div className="max-w-full text-slate-500">
+                <p>&copy; 2026 ORDENTRA, Inc. All rights reserved. ORDENTRA&reg; is a registered trademark.</p>
+                <p className="mt-1">Made for operations leaders. Hosted on sovereign cloud.</p>
+              </div>
+              <div className="flex max-w-full flex-wrap items-center gap-5 text-slate-500 font-medium tracking-tight">
+                <a href="#" className="transition hover:text-black">
                   Privacy Policy
                 </a>
-                <a href="#contact" className="transition hover:text-black">
+                <a href="#" className="transition hover:text-black">
                   Terms of Service
                 </a>
-                <a
-                  href="tel:+919821252521"
-                  className="inline-flex min-w-0 items-center gap-2 transition hover:text-black"
-                >
-                  <Phone className="h-4 w-4" />
-                  +91 98 21 25 25 21
+                <a href="#" className="transition hover:text-black">
+                  DPA & GDPR
                 </a>
-                <a
-                  href="mailto:contact@ordentra.com"
-                  className="inline-flex min-w-0 items-center gap-2 break-all text-left transition hover:text-black sm:break-normal"
-                >
-                  <Mail className="h-4 w-4" />
-                  contact@ordentra.com
+                <a href="#" className="transition hover:text-black">
+                  Sub-processors
+                </a>
+                <a href="#" className="transition hover:text-black">
+                  Accessibility
                 </a>
               </div>
             </div>
