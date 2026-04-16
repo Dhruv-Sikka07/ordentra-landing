@@ -16,11 +16,14 @@ import {
   FileText,
   Heart,
   LayoutTemplate,
+  LockKeyhole,
   Mail,
   Menu,
   MessageSquare,
+  Network,
   Package,
   Phone,
+  ShieldCheck,
   Wallet,
   Workflow,
   X,
@@ -55,6 +58,7 @@ type PricingPlan = {
   name: string;
   subtitle: string;
   price: string;
+  priceNote: string;
   accent: "light" | "primary";
   features: string[];
 };
@@ -66,111 +70,119 @@ type Testimonial = {
   company: string;
 };
 
+type SignalCard = {
+  metric: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+};
+
 const navLinks: LinkItem[] = [
-  { label: "Features", href: "#features" },
-  { label: "Solutions", href: "#how-it-works" },
-  { label: "Resources", href: "#testimonials" },
+  { label: "Platform", href: "#features" },
+  { label: "Solutions", href: "#solutions" },
+  { label: "Customers", href: "#customers" },
   { label: "Pricing", href: "#pricing" },
+  { label: "Resources", href: "#integrations" },
 ];
 
 const footerLinkGroups = [
   {
-    title: "Company",
+    title: "Platform",
     links: [
-      { label: "About Us", href: "#features" },
-      { label: "How It Works", href: "#how-it-works" },
-      { label: "Customer Stories", href: "#testimonials" },
-      { label: "Contact", href: "#contact" },
+      { label: "Order Management", href: "#features" },
+      { label: "Procurement", href: "#features" },
+      { label: "Inventory Control", href: "#features" },
+      { label: "OPEX Intelligence", href: "#features" },
     ],
   },
   {
-    title: "Product",
+    title: "Solutions",
     links: [
-      { label: "Features", href: "#features" },
-      { label: "Pricing", href: "#pricing" },
-      { label: "Approvals", href: "#features" },
-      { label: "Analytics", href: "#features" },
+      { label: "Manufacturing", href: "#solutions" },
+      { label: "Retail & CPG", href: "#solutions" },
+      { label: "Healthcare", href: "#solutions" },
+      { label: "Logistics", href: "#solutions" },
     ],
   },
 ];
 
 const utilityButtons: IconLinkButton[] = [
-  { label: "Save", icon: Heart },
+  { label: "Security", icon: Heart },
   { label: "Docs", icon: Bookmark },
 ];
 
 const featureCards: FeatureCard[] = [
   {
-    title: "Budget Planning & Control",
+    title: "Order Management",
     description:
-      "Create budgets by department, site, and cost center with configurable limits and overspend alerts.",
+      "Close the order-to-approval gap with one system for requests, approvals, and transaction visibility.",
     icon: Wallet,
     accentClass: "bg-sky-100 text-sky-700",
-    eyebrow: "Financial clarity",
+    eyebrow: "Order-to-approval",
   },
   {
-    title: "Budget Lifecycle Management",
+    title: "Procurement",
     description:
-      "Move budgets from draft to approval to activation with revisions, rejections, and complete accountability.",
+      "Run source-to-pay workflows without spreadsheet handoffs or disconnected approval chains.",
     icon: BadgeCheck,
     accentClass: "bg-emerald-100 text-emerald-700",
-    eyebrow: "Approval ready",
+    eyebrow: "Source-to-pay",
   },
   {
-    title: "Item Classification Engine",
+    title: "Inventory Control",
     description:
-      "Categorize consumables, MRO, raw materials, and services so every purchase follows a clean structure.",
+      "Track live stock across warehouses, sites, and operating units from one control layer.",
     icon: Building2,
     accentClass: "bg-violet-100 text-violet-700",
-    eyebrow: "Structured operations",
+    eyebrow: "Live stock",
   },
   {
-    title: "Cost Allocation",
+    title: "Trade Operations",
     description:
-      "Allocate operational costs across departments, projects, and cost centers without manual spreadsheet cleanup.",
+      "Coordinate trade workflows, vendor movement, and operational controls across every transaction.",
     icon: Workflow,
     accentClass: "bg-amber-100 text-amber-700",
-    eyebrow: "Cross-team visibility",
+    eyebrow: "Transaction flow",
   },
   {
-    title: "OpEx Reports & Analytics",
+    title: "OPEX Intelligence",
     description:
-      "Monitor consumption, stock valuation, material movement, and reorder alerts from one reporting layer.",
+      "See real-time budget versus actual with clear operational spend visibility and reporting.",
     icon: ChartColumnIncreasing,
     accentClass: "bg-indigo-100 text-indigo-700",
-    eyebrow: "Live reporting",
+    eyebrow: "Real-time spend",
   },
   {
-    title: "Vendor Performance Tracking",
+    title: "AI Modules",
     description:
-      "Evaluate vendor performance trends, procurement efficiency, and reliability over time in one place.",
+      "Bring predictive reorder, anomaly detection, and operational risk signals into the platform as AI ships in 2026.",
     icon: ClipboardCheck,
     accentClass: "bg-rose-100 text-rose-700",
-    eyebrow: "Supplier intelligence",
+    eyebrow: "AI roadmap",
   },
 ];
 
 const floatingTiles: FloatingTile[] = [
   {
-    label: "Budgets",
+    label: "Orders",
     icon: Wallet,
     className: "left-[5%] top-[20%] rotate-[-8deg]",
     accentClass: "bg-sky-100 text-sky-600",
   },
   {
-    label: "Approvals",
+    label: "Procurement",
     icon: BadgeCheck,
     className: "left-[17%] top-[52%] rotate-[10deg]",
     accentClass: "bg-emerald-100 text-emerald-600",
   },
   {
-    label: "Vendors",
+    label: "Trade Ops",
     icon: Building2,
     className: "left-[29%] top-[18%] rotate-[-12deg]",
     accentClass: "bg-violet-100 text-violet-600",
   },
   {
-    label: "Workflows",
+    label: "Approvals",
     icon: Workflow,
     className: "left-[41%] top-[50%] rotate-[8deg]",
     accentClass: "bg-amber-100 text-amber-600",
@@ -182,19 +194,19 @@ const floatingTiles: FloatingTile[] = [
     accentClass: "bg-cyan-100 text-cyan-700",
   },
   {
-    label: "Expenses",
+    label: "OPEX",
     icon: ClipboardCheck,
     className: "left-[65%] top-[52%] rotate-[-10deg]",
     accentClass: "bg-rose-100 text-rose-600",
   },
   {
-    label: "Reports",
+    label: "Insights",
     icon: ChartColumnIncreasing,
     className: "left-[77%] top-[20%] rotate-[10deg]",
     accentClass: "bg-indigo-100 text-indigo-600",
   },
   {
-    label: "Analytics",
+    label: "AI 2026",
     icon: CalendarRange,
     className: "left-[89%] top-[52%] rotate-[-6deg]",
     accentClass: "bg-orange-100 text-orange-600",
@@ -203,57 +215,138 @@ const floatingTiles: FloatingTile[] = [
 
 const workflowSteps = [
   {
-    title: "Connect",
+    title: "Your stack, mapped",
     description:
-      "Integrate your departments, sites and cost centers into one centralized ERP platform.",
+      "We map your existing ERP, commerce, and data footprint before the call so the conversation starts from your real operating environment.",
   },
   {
-    title: "Track",
+    title: "Reference deployment",
     description:
-      "Monitor budgets, expenses, materials and vendor activity in real time.",
+      "Walk through a relevant enterprise operating model using ORDENTRA for order flow, procurement, and inventory visibility.",
   },
   {
-    title: "Optimize",
+    title: "Procurement & security Q&A",
     description:
-      "Use analytics and reporting tools to improve operational efficiency and cost control.",
+      "Bring your hardest procurement, connector, and security questions and get answers in writing with the right stakeholders copied.",
+  },
+];
+
+const integrationCards: FeatureCard[] = [
+  {
+    title: "Native connectors",
+    description:
+      "Connect ERP, finance, warehouse, and commerce systems through 40+ native connectors with fast setup.",
+    icon: Network,
+    accentClass: "bg-sky-100 text-sky-700",
+    eyebrow: "40+ connectors",
+  },
+  {
+    title: "REST API workflows",
+    description:
+      "Extend ORDENTRA into internal services, custom approvals, and external orchestration with API-first integration paths.",
+    icon: Workflow,
+    accentClass: "bg-violet-100 text-violet-700",
+    eyebrow: "API-first",
+  },
+  {
+    title: "CSV / SFTP exchange",
+    description:
+      "Support controlled batch exchange for enterprise environments where partners still rely on secure file-based integrations.",
+    icon: CalendarRange,
+    accentClass: "bg-amber-100 text-amber-700",
+    eyebrow: "Enterprise exchange",
+  },
+];
+
+const securityCards: FeatureCard[] = [
+  {
+    title: "AES-256 encryption",
+    description:
+      "Protect data at rest and in transit, with customer-managed keys available on enterprise deployment paths.",
+    icon: LockKeyhole,
+    accentClass: "bg-emerald-100 text-emerald-700",
+    eyebrow: "Security",
+  },
+  {
+    title: "Private cloud & on-prem",
+    description:
+      "Choose isolated private cloud or on-prem deployment for regulated industries and tightly controlled operating environments.",
+    icon: Building2,
+    accentClass: "bg-indigo-100 text-indigo-700",
+    eyebrow: "Deployment",
+  },
+  {
+    title: "Review readiness",
+    description:
+      "NDA on request, SOC 2 review packet at GA, and clear written answers for procurement and security review teams.",
+    icon: ShieldCheck,
+    accentClass: "bg-rose-100 text-rose-700",
+    eyebrow: "Compliance",
+  },
+];
+
+const customerSignals: SignalCard[] = [
+  {
+    metric: "13 days",
+    title: "Avg PO cycle time",
+    description:
+      "Representative procurement performance signal used in the live ORDENTRA story.",
+    icon: ChartColumnIncreasing,
+  },
+  {
+    metric: "Global 2000",
+    title: "Target operating profile",
+    description:
+      "Positioned for enterprises running complex order, procurement, and inventory workflows across large organizations.",
+    icon: Building2,
+  },
+  {
+    metric: "Q2 2026",
+    title: "Founding design partners",
+    description:
+      "Pre-launch messaging centers on partnering closely with early enterprise deployments ahead of general release.",
+    icon: BadgeCheck,
   },
 ];
 
 const pricingPlans: PricingPlan[] = [
   {
-    name: "Starter",
-    subtitle: "Ideal for small teams",
-    price: "$5",
+    name: "Core",
+    subtitle: "For focused operational rollouts",
+    price: "Custom",
+    priceNote: "single-region launch",
     accent: "light",
     features: [
-      "Budget management",
-      "Expense tracking",
-      "Basic reports",
-      "Vendor tracking",
-    ],
-  },
-  {
-    name: "Pro",
-    subtitle: "Ideal for growing teams",
-    price: "$9",
-    accent: "primary",
-    features: [
-      "All starter features",
-      "Advanced analytics",
-      "Priority support",
-      "Unlimited projects",
+      "Order management foundation",
+      "Procurement workflows",
+      "Inventory control basics",
+      "Connector onboarding",
     ],
   },
   {
     name: "Enterprise",
-    subtitle: "Best for large organizations",
-    price: "$12",
+    subtitle: "For isolated enterprise deployment",
+    price: "Custom",
+    priceNote: "enterprise rollout",
+    accent: "primary",
+    features: [
+      "OPEX intelligence",
+      "AES-256 encryption",
+      "Private cloud options",
+      "Priority implementation",
+    ],
+  },
+  {
+    name: "Elite",
+    subtitle: "For regulated global operations",
+    price: "Custom",
+    priceNote: "multi-region program",
     accent: "light",
     features: [
-      "All Pro features",
-      "Dedicated support",
-      "Advanced reporting",
-      "Unlimited users",
+      "On-prem deployment paths",
+      "Advanced security review",
+      "AI modules roadmap",
+      "Dedicated operating support",
     ],
   },
 ];
@@ -261,35 +354,55 @@ const pricingPlans: PricingPlan[] = [
 const testimonials: Testimonial[] = [
   {
     quote:
-      '"Ordentra helped us streamline our operational budgets and track expenses across departments efficiently."',
-    name: "Rahul Sharma",
-    role: "Operations Manager",
-    company: "Tata Steel",
+      '"BOM-aware procurement and multi-plant stock visibility on one operating layer."',
+    name: "Manufacturing",
+    role: "BOM-aware procurement",
+    company: "Multi-plant stock",
   },
   {
     quote:
-      '"With Ordentra, our procurement approvals and inventory visibility improved dramatically."',
-    name: "Sneha Iyer",
-    role: "Supply Chain Lead",
-    company: "Mahindra Logistics",
+      '"Shelf-to-supplier visibility at SKU depth without fragmented tools or reporting lag."',
+    name: "Retail & CPG",
+    role: "SKU-level visibility",
+    company: "Supplier coordination",
   },
   {
     quote:
-      '"Vendor tracking and budget approvals are now faster and more transparent with Ordentra."',
-    name: "Arjun Patel",
-    role: "Procurement Head",
-    company: "Larsen & Toubro",
+      '"HIPAA-aligned, lot-tracked, audit-ready workflows for regulated operating environments."',
+    name: "Healthcare",
+    role: "Audit-ready controls",
+    company: "Regulated operations",
+  },
+  {
+    quote:
+      '"Fleet-aware procurement tied to route-level operating performance and live stock movement."',
+    name: "Logistics",
+    role: "Route-linked spend control",
+    company: "Fleet operations",
+  },
+  {
+    quote:
+      '"Operational controls for distributed field operations, critical inventory, and controlled vendor execution."',
+    name: "Energy & Utilities",
+    role: "Distributed operating control",
+    company: "Critical infrastructure",
   },
 ];
 
 function BrandMark() {
   return (
-    <span className="grid h-5 w-5 grid-cols-2 gap-0.5 rounded-full bg-white p-0.5 shadow-[0_4px_10px_rgba(0,0,0,0.08)]">
-      <span className="rounded-full bg-[#1da1f2]" />
-      <span className="rounded-full bg-[#111111]" />
-      <span className="rounded-full bg-[#111111]" />
-      <span className="rounded-full bg-[#1da1f2]" />
-    </span>
+    <svg viewBox="0 0 40 40" className="h-5 w-5" fill="none" aria-hidden="true">
+      <rect x="1" y="1" width="38" height="38" rx="4" fill="#0B1F37" />
+      <rect x="7" y="7" width="8" height="8" rx="1" fill="#FAFAFA" />
+      <rect x="17" y="7" width="8" height="8" rx="1" fill="#FAFAFA" fillOpacity="0.55" />
+      <rect x="27" y="7" width="6" height="8" rx="1" fill="#FAFAFA" fillOpacity="0.28" />
+      <rect x="7" y="17" width="8" height="8" rx="1" fill="#FAFAFA" fillOpacity="0.55" />
+      <rect x="17" y="17" width="8" height="8" rx="1" fill="#FAFAFA" />
+      <rect x="27" y="17" width="6" height="8" rx="1" fill="#FAFAFA" fillOpacity="0.55" />
+      <rect x="7" y="27" width="8" height="6" rx="1" fill="#FAFAFA" fillOpacity="0.28" />
+      <rect x="17" y="27" width="8" height="6" rx="1" fill="#FAFAFA" fillOpacity="0.55" />
+      <rect x="27" y="27" width="6" height="6" rx="1" fill="#FAFAFA" />
+    </svg>
   );
 }
 
@@ -358,13 +471,13 @@ function TaskProgressCard({
   return (
     <div className="rounded-[1rem] bg-white px-3 py-3">
       <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center gap-2">
           <span
             className={`flex h-5 w-5 items-center justify-center rounded-md ${iconClass}`}
           >
             <Icon className="h-3.5 w-3.5" />
           </span>
-          <span className="text-[10px] text-slate-700">{label}</span>
+          <span className="min-w-0 text-[10px] text-slate-700">{label}</span>
         </div>
         <span className="text-[10px] text-slate-400">{progress}</span>
       </div>
@@ -378,7 +491,7 @@ function TaskProgressCard({
 function IntegrationCard() {
   return (
     <div className="rounded-[1.35rem] border border-black/5 bg-[#f6f6f6] p-4 text-left shadow-[0_18px_35px_rgba(0,0,0,0.08)]">
-      <p className="text-[12px] font-medium text-slate-700">100+ integrations</p>
+      <p className="text-[12px] font-medium text-slate-700">40+ native connectors</p>
       <div className="mt-4 flex items-center gap-3">
         <div className="rounded-[1rem] bg-white p-4 shadow-[0_10px_25px_rgba(0,0,0,0.05)]">
           <Mail className="h-7 w-7 text-[#ea4335]" />
@@ -396,23 +509,23 @@ function IntegrationCard() {
 
 function MobileHeroCards() {
   return (
-    <div className="mt-10 grid w-full max-w-[320px] gap-4 sm:hidden">
+    <div className="mx-auto mt-10 grid w-full max-w-[320px] gap-4 sm:hidden">
       <div className="rounded-[1.35rem] border border-black/5 bg-[#f6f6f6] p-4 text-left shadow-[0_18px_35px_rgba(0,0,0,0.08)]">
-        <p className="text-[12px] font-medium text-slate-700">Today&apos;s tasks</p>
+        <p className="text-[12px] font-medium text-slate-700">Recent procurement activity</p>
         <div className="mt-4 space-y-3">
           <TaskProgressCard
             icon={FileText}
             iconClass="bg-[#ff6b4a]/12 text-[#ff6b4a]"
-            label="New RFQ for campaign"
-            progress="60%"
-            widthClass="w-[60%]"
+            label="PO-18422 | Vendor A"
+            progress="Approved"
+            widthClass="w-[86%]"
           />
           <TaskProgressCard
             icon={LayoutTemplate}
             iconClass="bg-[#2bc36b]/12 text-[#2bc36b]"
-            label="Design PPT review"
-            progress="72%"
-            widthClass="w-[72%]"
+            label="PO-18421 | Vendor B"
+            progress="Review"
+            widthClass="w-[54%]"
           />
         </div>
       </div>
@@ -430,10 +543,10 @@ function SiteHeader() {
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-3 rounded-[1.35rem] border border-black/6 bg-white px-3 py-3 shadow-[0_18px_40px_rgba(15,23,42,0.08)] sm:px-5 lg:px-6">
         <a
           href="#"
-          className="flex items-center gap-3 text-[15px] font-semibold tracking-[-0.03em] text-[#161616]"
+          className="font-display-copy flex items-center gap-3 text-[15px] font-semibold tracking-[0.12em] text-[#161616]"
         >
           <BrandMark />
-          Ordentra
+          ORDENTRA
         </a>
 
         <nav className="hidden flex-1 items-center justify-center gap-8 text-[11px] font-medium text-slate-500 lg:flex">
@@ -448,21 +561,20 @@ function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <div className="hidden items-center gap-3 sm:flex">
-            <a
-              href="#contact"
-              className="text-[11px] font-medium text-slate-600 transition hover:text-slate-950"
-            >
-              Sign in
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-[11px] font-medium text-slate-700 shadow-[0_10px_25px_rgba(15,23,42,0.06)] transition hover:border-slate-300 hover:text-slate-950"
-            >
-              Get demo
-            </a>
-          </div>
+        <div className="hidden items-center gap-3 sm:flex">
+          <a
+            href="#contact"
+            className="text-[11px] font-medium text-slate-600 transition hover:text-slate-950"
+          >
+            Sign in
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-[11px] font-medium text-slate-700 shadow-[0_10px_25px_rgba(15,23,42,0.06)] transition hover:border-slate-300 hover:text-slate-950"
+          >
+            Book a Demo
+          </a>
+        </div>
 
           <button
             type="button"
@@ -526,14 +638,9 @@ function SiteHeader() {
             <a
               href="#contact"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`mt-2 inline-flex items-center justify-center rounded-xl bg-[#2f80ff] px-4 py-3 text-sm font-medium text-white shadow-[0_20px_35px_rgba(47,128,255,0.24)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-[#1f72f0] ${
-                isMobileMenuOpen
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-2 opacity-0"
-              }`}
-              style={{ transitionDelay: isMobileMenuOpen ? `${navLinks.length * 35}ms` : "0ms" }}
+              className="mt-2 inline-flex items-center justify-center rounded-xl bg-[#2f80ff] px-4 py-3 text-sm font-medium text-white shadow-[0_20px_35px_rgba(47,128,255,0.24)] transition hover:bg-[#1f72f0]"
             >
-              Get demo
+              Book a Demo
             </a>
           </nav>
         </div>
@@ -544,27 +651,36 @@ function SiteHeader() {
 
 function HeroSection() {
   return (
-    <section className="pb-8 pt-3 sm:pb-12">
+    <section className="hero-section pb-8 pt-3 sm:pb-12">
       <Reveal className="mx-auto max-w-[1400px]">
-        <div className="relative overflow-hidden px-3 py-8 sm:px-5 sm:py-10 lg:min-h-[760px] lg:px-6 lg:py-12">
+        <div className="hero-shell relative overflow-hidden px-4 py-8 sm:px-8 sm:py-10 lg:min-h-[760px] lg:px-10 lg:py-12">
 
-          <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center pt-4 text-center sm:pt-24 lg:pt-34">
+          <div className="hero-content relative z-10 mx-auto flex max-w-5xl flex-col items-center pt-14 text-center sm:pt-28 lg:pt-34">
             <div className="hero-app-badge mb-8 flex h-[72px] w-[72px] items-center justify-center rounded-[1.45rem] border border-black/6 bg-white shadow-[0_20px_40px_rgba(15,23,42,0.08)]">
-              <div className="grid grid-cols-2 gap-1.5">
-                <span className="h-[15px] w-[15px] rounded-full bg-[#28c3ff]" />
-                <span className="h-[15px] w-[15px] rounded-full bg-[#d8d8d8]" />
-                <span className="h-[15px] w-[15px] rounded-full bg-[#3a3a3a]" />
-                <span className="h-[15px] w-[15px] rounded-full bg-[#3a3a3a]" />
-              </div>
+              <svg viewBox="0 0 40 40" className="h-10 w-10" fill="none" aria-hidden="true">
+                <rect x="1" y="1" width="38" height="38" rx="4" fill="#0B1F37" />
+                <rect x="7" y="7" width="8" height="8" rx="1" fill="#FAFAFA" />
+                <rect x="17" y="7" width="8" height="8" rx="1" fill="#FAFAFA" fillOpacity="0.55" />
+                <rect x="27" y="7" width="6" height="8" rx="1" fill="#FAFAFA" fillOpacity="0.28" />
+                <rect x="7" y="17" width="8" height="8" rx="1" fill="#FAFAFA" fillOpacity="0.55" />
+                <rect x="17" y="17" width="8" height="8" rx="1" fill="#FAFAFA" />
+                <rect x="27" y="17" width="6" height="8" rx="1" fill="#FAFAFA" fillOpacity="0.55" />
+                <rect x="7" y="27" width="8" height="6" rx="1" fill="#FAFAFA" fillOpacity="0.28" />
+                <rect x="17" y="27" width="8" height="6" rx="1" fill="#FAFAFA" fillOpacity="0.55" />
+                <rect x="27" y="27" width="6" height="6" rx="1" fill="#FAFAFA" />
+              </svg>
             </div>
 
-            <h1 className="max-w-5xl text-[3rem] font-medium tracking-[-0.08em] text-[#121212] sm:text-[4.5rem] lg:text-[5.25rem] lg:leading-[0.93]">
-              Think, plan, and track
-              <span className="mt-0 block text-[#adadad]">all in one place</span>
+            <h1 className="hero-title font-display-copy max-w-5xl text-[3rem] font-medium tracking-[-0.08em] text-[#121212] sm:text-[4.5rem] lg:text-[5.25rem] lg:leading-[0.93]">
+              The enterprise
+              <span className="mt-0 block text-[#adadad]">OPEX platform</span>
             </h1>
 
             <p className="mt-7 max-w-[38rem] text-base leading-8 text-slate-500 sm:text-[1.15rem]">
-              Efficiently manage your tasks and boost productivity.
+              ORDENTRA unifies Order Management, Trade Operations, and
+              Inventory Control on one intelligent platform built to reduce
+              operational spend and bring real-time visibility to every
+              transaction.
             </p>
 
             <div className="mt-10">
@@ -572,7 +688,7 @@ function HeroSection() {
                 href="#contact"
                 className="inline-flex items-center justify-center rounded-[0.95rem] bg-[#2f80ff] px-8 py-3.5 text-[15px] font-medium text-white shadow-[0_20px_35px_rgba(47,128,255,0.28)] transition hover:bg-[#1f72f0]"
               >
-                Get free demo
+                Book a Demo
               </a>
             </div>
 
@@ -582,8 +698,8 @@ function HeroSection() {
           <div className="hero-float-left absolute left-5 top-10 z-10 hidden sm:block sm:left-8 lg:left-10 lg:top-11">
             <div className="relative rotate-[-7deg] rounded-[1.35rem] border border-[#f0e0a8] bg-[#ffe97a] px-4 py-4 shadow-[0_18px_35px_rgba(0,0,0,0.08)] sm:px-5 sm:py-5">
               <p className="max-w-[12rem] text-[13px] leading-7 text-[#3f3420]">
-                Take notes to keep track of vendor details, team approvals, and
-                budget follow-ups.
+                Reduce operational spend and bring real-time visibility to
+                orders, procurement, and inventory decisions.
               </p>
             </div>
             <div className="absolute -bottom-9 left-8 rotate-[8deg] rounded-[1.2rem] border border-black/5 bg-white p-4 shadow-[0_16px_32px_rgba(0,0,0,0.08)]">
@@ -595,7 +711,9 @@ function HeroSection() {
 
           <div className="hero-float-right absolute right-1 top-5 z-10 hidden sm:right-6 sm:block lg:right-8 lg:top-8">
             <div className="relative rotate-[10deg] rounded-[1.5rem] border border-black/5 bg-[#f6f6f6] p-4 shadow-[0_18px_35px_rgba(0,0,0,0.08)] sm:w-[210px]">
-              <p className="text-[12px] font-medium text-[#202020]">Reminders</p>
+              <p className="text-[12px] font-medium text-[#202020]">
+                Founding access
+              </p>
               <div className="mt-4 rounded-[1rem] bg-white px-4 py-3">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700">
@@ -603,55 +721,57 @@ function HeroSection() {
                   </div>
                   <div className="text-left">
                     <p className="text-[11px] font-medium text-slate-800">
-                      Today&apos;s Meeting
+                      Design partners
                     </p>
-                    <p className="mt-1 text-[10px] text-slate-400">11:30 AM</p>
+                    <p className="mt-1 text-[10px] text-slate-400">Q2 2026 release</p>
                   </div>
                 </div>
                 <div className="mt-3 rounded-full bg-[#eef5ff] px-3 py-1 text-center text-[10px] font-semibold text-[#4091ff]">
-                  13:00 - 13:25
+                  AI modules shipping 2026
                 </div>
               </div>
               <a
                 href="#contact"
                 className="mt-3 inline-flex rounded-full bg-[#111111] px-3 py-1.5 text-[10px] font-medium text-white transition hover:bg-black"
               >
-                Schedule now
+                Request access
               </a>
             </div>
           </div>
 
           <div className="hero-float-bottom-left absolute bottom-0 left-4 z-10 hidden w-[260px] translate-y-12 sm:left-7 sm:block sm:w-[285px] lg:left-9">
             <div className="rounded-[1.5rem] border border-black/5 bg-[#f6f6f6] p-4 shadow-[0_18px_35px_rgba(0,0,0,0.08)]">
-              <p className="text-[12px] font-medium text-slate-700">Today&apos;s tasks</p>
+              <p className="text-[12px] font-medium text-slate-700">
+                Recent procurement activity
+              </p>
               <div className="mt-4 space-y-3">
                 <TaskProgressCard
                   icon={FileText}
                   iconClass="bg-[#ff6b4a]/12 text-[#ff6b4a]"
-                  label="New RFQ for campaign"
-                  progress="60%"
-                  widthClass="w-[60%]"
+                  label="PO-18422 | Vendor A"
+                  progress="Approved"
+                  widthClass="w-[86%]"
                 />
                 <TaskProgressCard
                   icon={LayoutTemplate}
                   iconClass="bg-[#2bc36b]/12 text-[#2bc36b]"
-                  label="Design PPT review"
-                  progress="72%"
-                  widthClass="w-[72%]"
+                  label="PO-18421 | Vendor B"
+                  progress="Review"
+                  widthClass="w-[54%]"
                 />
               </div>
               <a
                 href="#features"
                 className="mt-4 inline-flex text-[11px] font-medium text-[#2f80ff] transition hover:text-[#1f72f0]"
               >
-                View all tasks
+                View all activity
               </a>
             </div>
           </div>
 
           <div className="hero-float-bottom-right absolute bottom-0 right-4 z-10 hidden w-[260px] translate-y-12 sm:right-8 sm:block sm:w-[310px] lg:right-10">
             <div className="rounded-[1.5rem] border border-black/5 bg-[#f6f6f6] p-4 shadow-[0_18px_35px_rgba(0,0,0,0.08)]">
-              <p className="text-[12px] font-medium text-slate-700">100+ integrations</p>
+              <p className="text-[12px] font-medium text-slate-700">40+ native connectors</p>
               <div className="mt-4 flex items-center gap-3">
                 <div className="rounded-[1rem] bg-white p-4 shadow-[0_10px_25px_rgba(0,0,0,0.05)]">
                   <Mail className="h-7 w-7 text-[#ea4335]" />
@@ -667,7 +787,7 @@ function HeroSection() {
                 href="#pricing"
                 className="mt-4 inline-flex text-[11px] font-medium text-slate-700 transition hover:text-slate-950"
               >
-                Explore plans
+                Explore connectors
               </a>
             </div>
           </div>
@@ -688,15 +808,15 @@ function FeaturesSection() {
           <div className="relative z-10">
             <div className="mx-auto max-w-3xl text-center">
               <p className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700">
-                Built For Modern Operations
+                Platform modules
               </p>
-              <h2 className="mt-6 text-4xl font-semibold tracking-[-0.06em] text-slate-950 sm:text-5xl lg:text-[4rem] lg:leading-[0.96]">
-                Powerful ERP features with the same calm flow as your hero.
+              <h2 className="font-display-copy mt-6 text-4xl font-semibold tracking-[-0.06em] text-slate-950 sm:text-5xl lg:text-[4rem] lg:leading-[0.96]">
+                One intelligent OPEX platform for every transaction.
               </h2>
               <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
-                From planning and approvals to vendors and analytics, Ordentra
-                keeps every operational workflow inside one polished, readable
-                workspace.
+                From order flow and source-to-pay to inventory control and live
+                spend visibility, ORDENTRA gives operations teams one readable
+                layer across complex workflows.
               </p>
             </div>
 
@@ -720,7 +840,7 @@ function FeaturesSection() {
                         </span>
                       </div>
 
-                      <h3 className="mt-6 text-[1.45rem] font-semibold tracking-[-0.04em] text-slate-950">
+                      <h3 className="font-display-copy mt-6 text-[1.45rem] font-semibold tracking-[-0.04em] text-slate-950">
                         {title}
                       </h3>
                       <p className="mt-3 text-[15px] leading-7 text-slate-600">
@@ -743,20 +863,184 @@ function FeaturesSection() {
   );
 }
 
-function HowItWorksSection() {
+function IntegrationsSection() {
   return (
-    <section id="how-it-works" className="py-20">
-      <Reveal className="mx-auto max-w-[1400px] px-3 sm:px-5 lg:px-6">
+    <section id="integrations" className="py-20">
+      <Reveal className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700">
-            Workflow in motion
+            Integrations
           </p>
-          <h2 className="mt-6 text-4xl font-semibold tracking-[-0.06em] text-slate-950 sm:text-5xl lg:text-[4rem] lg:leading-[0.96]">
-            How Ordentra works from request to reporting.
+          <h2 className="font-display-copy mt-6 text-4xl font-semibold tracking-[-0.06em] text-slate-950 sm:text-5xl lg:text-[4rem] lg:leading-[0.96]">
+            Connect ORDENTRA into the systems you already run.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
-            A clear operational flow for teams that need alignment, approvals,
-            and visibility without the mess of disconnected tools.
+            Native connectors, API-first workflows, and secure batch exchange
+            options keep ORDENTRA usable in real enterprise environments.
+          </p>
+        </div>
+
+        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
+          {integrationCards.map(
+            ({ title, description, icon: Icon, accentClass, eyebrow }, index) => (
+              <Reveal
+                key={title}
+                delay={index * 90}
+                className="group relative overflow-hidden rounded-[1.75rem] border border-black/6 bg-white/82 p-6 text-left shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)] sm:p-7"
+              >
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-[linear-gradient(180deg,rgba(255,255,255,0.42),transparent)]" />
+
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between gap-4">
+                    <div
+                      className={`flex h-14 w-14 items-center justify-center rounded-[1.2rem] ${accentClass}`}
+                    >
+                      <Icon className="h-7 w-7" />
+                    </div>
+                    <span className="rounded-full bg-[#eef5ff] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#2f80ff]">
+                      {eyebrow}
+                    </span>
+                  </div>
+
+                  <h3 className="font-display-copy mt-6 text-[1.45rem] font-semibold tracking-[-0.04em] text-slate-950">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-[15px] leading-7 text-slate-600">
+                    {description}
+                  </p>
+                </div>
+              </Reveal>
+            ),
+          )}
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function SecuritySection() {
+  return (
+    <section id="security" className="py-20">
+      <Reveal className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700">
+            Security
+          </p>
+          <h2 className="font-display-copy mt-6 text-4xl font-semibold tracking-[-0.06em] text-slate-950 sm:text-5xl lg:text-[4rem] lg:leading-[0.96]">
+            Security and deployment options shaped for enterprise review.
+          </h2>
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
+            Match procurement and IT expectations with stronger deployment
+            options, encryption, and review-ready operating language.
+          </p>
+        </div>
+
+        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
+          {securityCards.map(
+            ({ title, description, icon: Icon, accentClass, eyebrow }, index) => (
+              <Reveal
+                key={title}
+                delay={index * 90}
+                className="group relative overflow-hidden rounded-[1.75rem] border border-black/6 bg-white/82 p-6 text-left shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)] sm:p-7"
+              >
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-[linear-gradient(180deg,rgba(255,255,255,0.42),transparent)]" />
+
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between gap-4">
+                    <div
+                      className={`flex h-14 w-14 items-center justify-center rounded-[1.2rem] ${accentClass}`}
+                    >
+                      <Icon className="h-7 w-7" />
+                    </div>
+                    <span className="rounded-full bg-[#eef5ff] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#2f80ff]">
+                      {eyebrow}
+                    </span>
+                  </div>
+
+                  <h3 className="font-display-copy mt-6 text-[1.45rem] font-semibold tracking-[-0.04em] text-slate-950">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-[15px] leading-7 text-slate-600">
+                    {description}
+                  </p>
+                </div>
+              </Reveal>
+            ),
+          )}
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function CustomersSection() {
+  return (
+    <section id="customers" className="py-20">
+      <Reveal className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700">
+            Customers
+          </p>
+          <h2 className="font-display-copy mt-6 text-4xl font-semibold tracking-[-0.06em] text-slate-950 sm:text-5xl lg:text-[4rem] lg:leading-[0.96]">
+            The same enterprise proof points carried by the live site.
+          </h2>
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
+            This section keeps the current card language while reflecting the
+            live homepage’s enterprise signals and rollout narrative.
+          </p>
+        </div>
+
+        <div className="mx-auto mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {customerSignals.map(({ metric, title, description, icon: Icon }, index) => (
+            <Reveal
+              key={title}
+              delay={index * 90}
+              className="group relative overflow-hidden rounded-[1.75rem] border border-black/6 bg-white/82 p-6 text-left shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)] sm:p-7"
+            >
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(255,255,255,0.42),transparent)]" />
+
+              <div className="relative z-10">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-[1.2rem] bg-slate-100 text-slate-900">
+                    <Icon className="h-7 w-7" />
+                  </div>
+                  <span className="font-mono-copy rounded-full bg-[#eef5ff] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#2f80ff]">
+                    Signal 0{index + 1}
+                  </span>
+                </div>
+
+                <p className="font-display-copy mt-6 text-4xl font-semibold tracking-[-0.06em] text-slate-950">
+                  {metric}
+                </p>
+                <h3 className="font-display-copy mt-3 text-[1.45rem] font-semibold tracking-[-0.04em] text-slate-950">
+                  {title}
+                </h3>
+                <p className="mt-3 text-[15px] leading-7 text-slate-600">
+                  {description}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function DemoSection() {
+  return (
+    <section id="contact" className="py-20">
+      <Reveal className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700">
+            Your 30 minutes
+          </p>
+          <h2 className="font-display-copy mt-6 text-4xl font-semibold tracking-[-0.06em] text-slate-950 sm:text-5xl lg:text-[4rem] lg:leading-[0.96]">
+            A demo flow aligned with the live ORDENTRA site.
+          </h2>
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
+            The local page now mirrors the live site’s meeting narrative using
+            the same layout language you already have.
           </p>
         </div>
 
@@ -765,36 +1049,48 @@ function HowItWorksSection() {
             <Reveal
               key={step.title}
               delay={index * 90}
-              className="group relative overflow-hidden rounded-[1.75rem] border border-black/6 bg-white/82 p-6 text-center shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)] sm:p-7"
+              className="group relative overflow-hidden rounded-[1.75rem] border border-black/6 bg-white/82 p-6 text-left shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)] sm:p-7"
             >
               <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-[linear-gradient(180deg,rgba(255,255,255,0.42),transparent)]" />
 
               <div className="relative z-10">
-                <div className="flex flex-col items-center gap-4">
+                <div className="flex items-center justify-between gap-4">
                   <div className="flex h-14 w-14 items-center justify-center rounded-[1.2rem] bg-slate-100 text-slate-900">
-                    <span className="text-lg font-semibold tracking-[-0.04em]">
+                    <span className="font-mono-copy text-lg font-semibold tracking-[-0.04em]">
                       0{index + 1}
                     </span>
                   </div>
-                  <span className="rounded-full bg-[#eef5ff] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#2f80ff]">
-                    Step {index + 1}
+                  <span className="font-mono-copy rounded-full bg-[#eef5ff] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#2f80ff]">
+                    {index === 0 ? "0-5 min" : index === 1 ? "5-20 min" : "20-30 min"}
                   </span>
                 </div>
 
-                <h3 className="mt-6 text-[1.45rem] font-semibold tracking-[-0.04em] text-slate-950">
+                <h3 className="font-display-copy mt-6 text-[1.45rem] font-semibold tracking-[-0.04em] text-slate-950">
                   {step.title}
                 </h3>
                 <p className="mt-3 text-[15px] leading-7 text-slate-600">
                   {step.description}
                 </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
 
-                <div className="mt-6 h-1.5 rounded-full bg-slate-100">
-                  <div
-                    className={`h-full rounded-full bg-[#2f80ff] ${
-                      index === 0 ? "w-[38%]" : index === 1 ? "w-[68%]" : "w-full"
-                    }`}
-                  />
-                </div>
+        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {[
+            "Scheduled within 24 hours",
+            "NDA available on request",
+            "SOC 2 review packet at GA",
+            "No obligation, no follow-up cadence",
+          ].map((item, index) => (
+            <Reveal
+              key={item}
+              delay={index * 70}
+              className="rounded-[1.5rem] border border-black/6 bg-white/82 p-5 text-left shadow-[0_20px_45px_rgba(15,23,42,0.06)]"
+            >
+              <div className="flex items-start gap-3">
+                <span className="mt-2 h-2.5 w-2.5 rounded-full bg-emerald-500" />
+                <p className="text-[15px] leading-7 text-slate-600">{item}</p>
               </div>
             </Reveal>
           ))}
@@ -807,17 +1103,18 @@ function HowItWorksSection() {
 function PricingSection() {
   return (
     <section id="pricing" className="py-20">
-      <Reveal className="mx-auto max-w-[1400px] px-3 sm:px-5 lg:px-6">
+      <Reveal className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700">
-            Plans that scale
+            Commercial fit
           </p>
-          <h2 className="mt-6 text-4xl font-semibold tracking-[-0.06em] text-slate-950 sm:text-5xl lg:text-[4rem] lg:leading-[0.96]">
-            Simple pricing for teams growing into better operations.
+          <h2 className="font-display-copy mt-6 text-4xl font-semibold tracking-[-0.06em] text-slate-950 sm:text-5xl lg:text-[4rem] lg:leading-[0.96]">
+            Commercial models built for enterprise rollouts.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
-            Start lean, expand with confidence, and keep every workflow inside
-            one consistent operational system.
+            Start with a focused deployment, expand into isolated enterprise
+            environments, and align security, connectors, and operating support
+            to your footprint.
           </p>
         </div>
 
@@ -831,8 +1128,8 @@ function PricingSection() {
                 delay={index * 90}
                 className={
                   isPrimary
-                    ? "relative scale-105 overflow-hidden rounded-[1.9rem] border border-blue-500/30 bg-[#2f80ff] p-8 text-center text-white shadow-[0_28px_65px_rgba(47,128,255,0.26)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_34px_75px_rgba(47,128,255,0.3)]"
-                    : "relative overflow-hidden rounded-[1.9rem] border border-black/6 bg-white/82 p-8 text-center shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)]"
+                    ? "relative overflow-hidden rounded-[1.9rem] border border-blue-500/30 bg-[#2f80ff] p-8 text-left text-white shadow-[0_28px_65px_rgba(47,128,255,0.26)] transition duration-300 md:scale-105 hover:-translate-y-1 hover:shadow-[0_34px_75px_rgba(47,128,255,0.3)]"
+                    : "relative overflow-hidden rounded-[1.9rem] border border-black/6 bg-white/82 p-8 text-left shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)]"
                 }
               >
                 {!isPrimary ? (
@@ -842,9 +1139,13 @@ function PricingSection() {
                 )}
 
                 <div className="relative z-10">
-                  <div className="flex flex-col items-center gap-4">
-                    <div className="text-center">
-                      <h3 className={`text-2xl font-semibold ${isPrimary ? "" : "text-black"}`}>
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3
+                        className={`font-display-copy text-2xl font-semibold ${
+                          isPrimary ? "" : "text-black"
+                        }`}
+                      >
                         {plan.name}
                       </h3>
                       <p
@@ -862,7 +1163,7 @@ function PricingSection() {
                           : "bg-slate-100 text-slate-500"
                       }`}
                     >
-                      {isPrimary ? "Most popular" : "Flexible"}
+                      {isPrimary ? "Most requested" : "Flexible"}
                     </span>
                   </div>
 
@@ -873,7 +1174,7 @@ function PricingSection() {
                         isPrimary ? "text-blue-100" : "text-gray-500"
                       }`}
                     >
-                      /mo
+                      {plan.priceNote}
                     </span>
                   </p>
 
@@ -884,7 +1185,7 @@ function PricingSection() {
                         : "mt-8 w-full cursor-pointer rounded-xl bg-blue-600 py-3 text-white transition ease-in-out hover:bg-blue-700"
                     }
                   >
-                    Get Started
+                    Book a Demo
                   </button>
 
                   <ul
@@ -917,20 +1218,21 @@ function PricingSection() {
   );
 }
 
-function TestimonialsSection() {
+function SolutionsSection() {
   return (
-    <section id="testimonials" className="py-20">
-      <Reveal className="mx-auto max-w-[1400px] px-3 sm:px-5 lg:px-6">
+    <section id="solutions" className="py-20">
+      <Reveal className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700">
-            Customer stories
+            Solutions
           </p>
-          <h2 className="mt-6 text-4xl font-semibold tracking-[-0.06em] text-slate-950 sm:text-5xl lg:text-[4rem] lg:leading-[0.96]">
-            What our customers say after bringing operations into one place.
+          <h2 className="font-display-copy mt-6 text-4xl font-semibold tracking-[-0.06em] text-slate-950 sm:text-5xl lg:text-[4rem] lg:leading-[0.96]">
+            Built for teams running complex operations.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
-            Teams use Ordentra to cut friction from approvals, budgeting, and
-            procurement while keeping every stakeholder aligned.
+            ORDENTRA is positioned for manufacturing, retail and CPG,
+            healthcare, logistics, and other operations where visibility,
+            procurement control, and inventory discipline have to work together.
           </p>
         </div>
 
@@ -962,7 +1264,7 @@ function TestimonialsSection() {
                       .join("")
                       .slice(0, 2)}
                   </div>
-                  <div className="text-center">
+                  <div className="min-w-0">
                     <p className="font-semibold text-slate-950">
                       {testimonial.name}
                     </p>
@@ -980,7 +1282,8 @@ function TestimonialsSection() {
         </div>
 
         <p className="mt-10 text-center text-gray-500">
-          Trusted by 100+ teams managing operations with Ordentra
+          Built for the Global 2000 and founding design partners modernizing
+          operational spend.
         </p>
       </Reveal>
     </section>
@@ -989,14 +1292,14 @@ function TestimonialsSection() {
 
 function FooterFeatureGrid() {
   return (
-    <div className="footer-stage relative px-3 py-4 sm:px-5 sm:py-6">
+    <div className="footer-stage relative py-4 sm:px-5 sm:py-6">
       <div className="pointer-events-none absolute inset-0 opacity-90">
         <div className="absolute left-[10%] top-[18%] h-52 w-52 rounded-full bg-sky-100/45 blur-3xl" />
         <div className="absolute right-[14%] top-[28%] h-56 w-56 rounded-full bg-violet-100/35 blur-3xl" />
         <div className="absolute bottom-[6%] left-[42%] h-60 w-60 rounded-full bg-emerald-100/35 blur-3xl" />
       </div>
 
-      <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:hidden">
+      <div className="mx-auto grid w-full max-w-[20rem] grid-cols-2 gap-x-6 gap-y-8 px-4 sm:hidden">
         {floatingTiles.map(({ label, icon: Icon, accentClass }) => (
           <div key={label} className="flex flex-col items-center justify-center gap-3 text-center">
             <div
@@ -1027,19 +1330,21 @@ function FooterFeatureGrid() {
 
 function FooterSection() {
   return (
-    <footer id="contact" className="px-3 pb-4 pt-12 sm:px-5 lg:px-6">
-      <Reveal className="mx-auto max-w-[1400px]">
-        <div className="flex flex-col items-center gap-6 border-b border-black/6 px-3 py-5 text-center text-black sm:px-5 lg:px-6">
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-black/70">
+    <footer id="contact" className="pb-4 pt-12">
+      <Reveal className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-6 border-b border-black/6 px-4 py-5 text-black sm:px-8 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-black/70">
             <div className="flex items-center gap-3">
-              <p className="text-lg font-semibold tracking-tight text-black">Ordentra</p>
+              <p className="font-display-copy text-lg font-semibold tracking-[0.12em] text-black">
+                ORDENTRA
+              </p>
             </div>
             <span className="hidden text-slate-300 sm:inline">|</span>
             <span className="font-medium text-emerald-600">
-              Operational control for growing teams
+              The Enterprise OPEX Platform
             </span>
-            <a href="#testimonials" className="transition hover:text-black">
-              Customer stories
+            <a href="#solutions" className="transition hover:text-black">
+              Solutions
             </a>
           </div>
 
@@ -1064,15 +1369,15 @@ function FooterSection() {
           </div>
         </div>
 
-        <div className="px-3 pb-3 pt-8 text-black sm:px-5 sm:pb-4 sm:pt-10 lg:px-6">
+        <div className="px-4 pb-3 pt-8 text-black sm:px-8 sm:pb-4 sm:pt-10">
           <div className="footer-copy flex w-full flex-col gap-10">
             <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start">
               <div className="footer-copy text-center">
                 <p className="mb-4 inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em]">
-                  Built for modern operations
+                  Built for the Global 2000
                 </p>
-                <h2 className="footer-headline mx-auto max-w-[32rem] text-4xl font-semibold tracking-[-0.04em] sm:max-w-[36rem] sm:text-5xl sm:leading-[1.02]">
-                  Stay in control of operations, approvals, and spend.
+                <h2 className="footer-headline font-display-copy max-w-[32rem] text-4xl font-semibold tracking-[-0.04em] sm:max-w-[36rem] sm:text-5xl sm:leading-[1.02]">
+                  Unify order management, procurement, and inventory control.
                 </h2>
               </div>
 
@@ -1104,15 +1409,15 @@ function FooterSection() {
 
             <div className="footer-copy pt-2 text-center">
               <div className="overflow-hidden">
-                <p className="footer-wordmark w-full whitespace-nowrap text-[4.8rem] font-semibold leading-none text-black sm:text-[7rem] md:text-[9rem] lg:text-[12rem]">
-                  Ordentra
+                <p className="font-display-copy text-[4.8rem] font-semibold leading-none tracking-[0.08em] text-black sm:text-[7rem] md:text-[9rem] lg:text-[12rem]">
+                  ORDENTRA
                 </p>
               </div>
             </div>
 
-            <div className="footer-copy flex flex-col items-center gap-4 border-t border-black/6 pt-5 text-center text-sm">
-              <p>&copy; 2026 Ordentra Technologies Pvt. Ltd. All rights reserved.</p>
-              <div className="flex flex-wrap items-center justify-center gap-5">
+            <div className="footer-copy flex flex-col gap-4 border-t border-black/6 pt-5 text-sm sm:flex-row sm:items-center sm:justify-between">
+              <p className="max-w-full">&copy; 2026 Ordentra Technologies Pvt. Ltd. All rights reserved.</p>
+              <div className="flex max-w-full flex-wrap items-center gap-5">
                 <a href="#contact" className="transition hover:text-black">
                   Privacy Policy
                 </a>
@@ -1121,14 +1426,14 @@ function FooterSection() {
                 </a>
                 <a
                   href="tel:+919821252521"
-                  className="inline-flex items-center gap-2 transition hover:text-black"
+                  className="inline-flex min-w-0 items-center gap-2 transition hover:text-black"
                 >
                   <Phone className="h-4 w-4" />
                   +91 98 21 25 25 21
                 </a>
                 <a
                   href="mailto:contact@ordentra.com"
-                  className="inline-flex items-center gap-2 transition hover:text-black"
+                  className="inline-flex min-w-0 items-center gap-2 break-all text-left transition hover:text-black sm:break-normal"
                 >
                   <Mail className="h-4 w-4" />
                   contact@ordentra.com
@@ -1187,9 +1492,12 @@ export default function Home() {
         <SiteHeader />
         <HeroSection />
         <FeaturesSection />
-        <HowItWorksSection />
+        <SolutionsSection />
+        <IntegrationsSection />
+        <SecuritySection />
+        <CustomersSection />
         <PricingSection />
-        <TestimonialsSection />
+        <DemoSection />
         <FooterSection />
       </div>
     </main>
