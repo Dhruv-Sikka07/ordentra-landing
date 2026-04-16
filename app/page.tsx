@@ -427,7 +427,7 @@ function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5">
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between rounded-[1.35rem] border border-black/6 bg-white/80 px-4 py-3 backdrop-blur-xl shadow-[0_18px_40px_rgba(15,23,42,0.08)] sm:px-6">
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-3 rounded-[1.35rem] border border-black/6 bg-white px-3 py-3 shadow-[0_18px_40px_rgba(15,23,42,0.08)] sm:px-5 lg:px-6">
         <a
           href="#"
           className="flex items-center gap-3 text-[15px] font-semibold tracking-[-0.03em] text-[#161616]"
@@ -436,7 +436,7 @@ function SiteHeader() {
           Ordentra
         </a>
 
-        <nav className="hidden items-center gap-8 text-[11px] font-medium text-slate-500 lg:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-8 text-[11px] font-medium text-slate-500 lg:flex">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -448,41 +448,77 @@ function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 sm:flex">
-          <a
-            href="#contact"
-            className="text-[11px] font-medium text-slate-600 transition hover:text-slate-950"
-          >
-            Sign in
-          </a>
-          <a
-            href="#contact"
-            className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-[11px] font-medium text-slate-700 shadow-[0_10px_25px_rgba(15,23,42,0.06)] transition hover:border-slate-300 hover:text-slate-950"
-          >
-            Get demo
-          </a>
-        </div>
+        <div className="flex items-center gap-3">
+          <div className="hidden items-center gap-3 sm:flex">
+            <a
+              href="#contact"
+              className="text-[11px] font-medium text-slate-600 transition hover:text-slate-950"
+            >
+              Sign in
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-[11px] font-medium text-slate-700 shadow-[0_10px_25px_rgba(15,23,42,0.06)] transition hover:border-slate-300 hover:text-slate-950"
+            >
+              Get demo
+            </a>
+          </div>
 
-        <button
-          type="button"
-          aria-label={isMobileMenuOpen ? "Close navigation" : "Open navigation"}
-          aria-expanded={isMobileMenuOpen}
-          onClick={() => setIsMobileMenuOpen((open) => !open)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-[0_10px_25px_rgba(15,23,42,0.06)] transition hover:border-slate-300 hover:text-slate-950 lg:hidden"
-        >
-          {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+          <button
+            type="button"
+            aria-label={isMobileMenuOpen ? "Close navigation" : "Open navigation"}
+            aria-expanded={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            className="relative inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-[0_10px_25px_rgba(15,23,42,0.06)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-slate-300 hover:text-slate-950 lg:hidden"
+          >
+            <Menu
+              className={`absolute h-5 w-5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                isMobileMenuOpen
+                  ? "scale-75 rotate-90 opacity-0"
+                  : "scale-100 rotate-0 opacity-100"
+              }`}
+            />
+            <X
+              className={`absolute h-5 w-5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                isMobileMenuOpen
+                  ? "scale-100 rotate-0 opacity-100"
+                  : "scale-75 -rotate-90 opacity-0"
+              }`}
+            />
+          </button>
+        </div>
       </div>
 
-      {isMobileMenuOpen ? (
-        <div className="mx-auto mt-3 max-w-[1400px] rounded-[1.35rem] border border-black/6 bg-white/92 p-4 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:hidden">
+      <button
+        type="button"
+        aria-label="Close navigation overlay"
+        onClick={() => setIsMobileMenuOpen(false)}
+        className={`fixed inset-0 z-40 bg-white/20 transition-opacity duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+          isMobileMenuOpen
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
+      />
+      <div
+        className={`absolute inset-x-3 top-full z-50 mt-3 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden sm:inset-x-5 ${
+          isMobileMenuOpen
+            ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
+            : "pointer-events-none -translate-y-2 scale-[0.98] opacity-0"
+        }`}
+      >
+        <div className="mx-auto max-w-[1400px] rounded-[1.35rem] border border-black/6 bg-white p-4 shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
           <nav className="flex flex-col gap-2">
-            {navLinks.map((link) => (
+            {navLinks.map((link, index) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-slate-950"
+                className={`rounded-xl px-3 py-3 text-sm font-medium text-slate-700 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-slate-50 hover:text-slate-950 ${
+                  isMobileMenuOpen
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-2 opacity-0"
+                }`}
+                style={{ transitionDelay: isMobileMenuOpen ? `${index * 35}ms` : "0ms" }}
               >
                 {link.label}
               </a>
@@ -490,13 +526,18 @@ function SiteHeader() {
             <a
               href="#contact"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="mt-2 inline-flex items-center justify-center rounded-xl bg-[#2f80ff] px-4 py-3 text-sm font-medium text-white shadow-[0_20px_35px_rgba(47,128,255,0.24)] transition hover:bg-[#1f72f0]"
+              className={`mt-2 inline-flex items-center justify-center rounded-xl bg-[#2f80ff] px-4 py-3 text-sm font-medium text-white shadow-[0_20px_35px_rgba(47,128,255,0.24)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-[#1f72f0] ${
+                isMobileMenuOpen
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-2 opacity-0"
+              }`}
+              style={{ transitionDelay: isMobileMenuOpen ? `${navLinks.length * 35}ms` : "0ms" }}
             >
               Get demo
             </a>
           </nav>
         </div>
-      ) : null}
+      </div>
     </header>
   );
 }
@@ -505,9 +546,9 @@ function HeroSection() {
   return (
     <section className="pb-8 pt-3 sm:pb-12">
       <Reveal className="mx-auto max-w-[1400px]">
-        <div className="relative overflow-hidden px-4 py-8 sm:px-8 sm:py-10 lg:min-h-[760px] lg:px-10 lg:py-12">
+        <div className="relative overflow-hidden px-3 py-8 sm:px-5 sm:py-10 lg:min-h-[760px] lg:px-6 lg:py-12">
 
-          <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center pt-28 text-center sm:pt-28 lg:pt-34">
+          <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center pt-4 text-center sm:pt-24 lg:pt-34">
             <div className="hero-app-badge mb-8 flex h-[72px] w-[72px] items-center justify-center rounded-[1.45rem] border border-black/6 bg-white shadow-[0_20px_40px_rgba(15,23,42,0.08)]">
               <div className="grid grid-cols-2 gap-1.5">
                 <span className="h-[15px] w-[15px] rounded-full bg-[#28c3ff]" />
@@ -643,7 +684,7 @@ function FeaturesSection() {
   return (
     <section id="features" className="pb-20 pt-8 sm:pt-10">
       <Reveal className="mx-auto max-w-[1400px]">
-        <div className="relative overflow-hidden px-4 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
+        <div className="relative overflow-hidden px-3 py-8 sm:px-5 sm:py-10 lg:px-6 lg:py-12">
           <div className="relative z-10">
             <div className="mx-auto max-w-3xl text-center">
               <p className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700">
@@ -665,10 +706,10 @@ function FeaturesSection() {
                   <Reveal
                     key={title}
                     delay={index * 70}
-                    className="group relative overflow-hidden rounded-[1.75rem] border border-black/6 bg-white/82 p-6 text-left shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)] sm:p-7"
+                    className="group relative overflow-hidden rounded-[1.75rem] border border-black/6 bg-white/82 p-6 text-center shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)] sm:p-7"
                   >
                     <div className="relative z-10">
-                      <div className="flex items-start justify-between gap-4">
+                      <div className="flex flex-col items-center gap-4">
                         <div
                           className={`flex h-14 w-14 items-center justify-center rounded-[1.2rem] ${accentClass}`}
                         >
@@ -686,7 +727,7 @@ function FeaturesSection() {
                         {description}
                       </p>
 
-                      <div className="mt-6 flex items-center gap-2 text-sm font-medium text-[#2f80ff]">
+                      <div className="mt-6 flex items-center justify-center gap-2 text-sm font-medium text-[#2f80ff]">
                         <span>Learn more</span>
                         <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                       </div>
@@ -705,7 +746,7 @@ function FeaturesSection() {
 function HowItWorksSection() {
   return (
     <section id="how-it-works" className="py-20">
-      <Reveal className="mx-auto max-w-[1400px] px-6">
+      <Reveal className="mx-auto max-w-[1400px] px-3 sm:px-5 lg:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700">
             Workflow in motion
@@ -724,12 +765,12 @@ function HowItWorksSection() {
             <Reveal
               key={step.title}
               delay={index * 90}
-              className="group relative overflow-hidden rounded-[1.75rem] border border-black/6 bg-white/82 p-6 text-left shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)] sm:p-7"
+              className="group relative overflow-hidden rounded-[1.75rem] border border-black/6 bg-white/82 p-6 text-center shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)] sm:p-7"
             >
               <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-[linear-gradient(180deg,rgba(255,255,255,0.42),transparent)]" />
 
               <div className="relative z-10">
-                <div className="flex items-center justify-between gap-4">
+                <div className="flex flex-col items-center gap-4">
                   <div className="flex h-14 w-14 items-center justify-center rounded-[1.2rem] bg-slate-100 text-slate-900">
                     <span className="text-lg font-semibold tracking-[-0.04em]">
                       0{index + 1}
@@ -766,7 +807,7 @@ function HowItWorksSection() {
 function PricingSection() {
   return (
     <section id="pricing" className="py-20">
-      <Reveal className="mx-auto max-w-[1400px] px-6">
+      <Reveal className="mx-auto max-w-[1400px] px-3 sm:px-5 lg:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700">
             Plans that scale
@@ -790,8 +831,8 @@ function PricingSection() {
                 delay={index * 90}
                 className={
                   isPrimary
-                    ? "relative scale-105 overflow-hidden rounded-[1.9rem] border border-blue-500/30 bg-[#2f80ff] p-8 text-left text-white shadow-[0_28px_65px_rgba(47,128,255,0.26)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_34px_75px_rgba(47,128,255,0.3)]"
-                    : "relative overflow-hidden rounded-[1.9rem] border border-black/6 bg-white/82 p-8 text-left shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)]"
+                    ? "relative scale-105 overflow-hidden rounded-[1.9rem] border border-blue-500/30 bg-[#2f80ff] p-8 text-center text-white shadow-[0_28px_65px_rgba(47,128,255,0.26)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_34px_75px_rgba(47,128,255,0.3)]"
+                    : "relative overflow-hidden rounded-[1.9rem] border border-black/6 bg-white/82 p-8 text-center shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)]"
                 }
               >
                 {!isPrimary ? (
@@ -801,8 +842,8 @@ function PricingSection() {
                 )}
 
                 <div className="relative z-10">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="text-center">
                       <h3 className={`text-2xl font-semibold ${isPrimary ? "" : "text-black"}`}>
                         {plan.name}
                       </h3>
@@ -852,7 +893,7 @@ function PricingSection() {
                     }`}
                   >
                     {plan.features.map((item) => (
-                      <li key={item} className="flex items-center gap-3">
+                      <li key={item} className="flex items-center justify-center gap-3">
                         <span
                           className={`flex h-7 w-7 items-center justify-center rounded-full ${
                             isPrimary
@@ -879,7 +920,7 @@ function PricingSection() {
 function TestimonialsSection() {
   return (
     <section id="testimonials" className="py-20">
-      <Reveal className="mx-auto max-w-[1400px] px-6">
+      <Reveal className="mx-auto max-w-[1400px] px-3 sm:px-5 lg:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700">
             Customer stories
@@ -898,12 +939,12 @@ function TestimonialsSection() {
             <Reveal
               key={testimonial.name}
               delay={index * 90}
-              className="group relative overflow-hidden rounded-[1.75rem] border border-black/6 bg-white/82 p-6 text-left shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)] sm:p-7"
+              className="group relative overflow-hidden rounded-[1.75rem] border border-black/6 bg-white/82 p-6 text-center shadow-[0_20px_45px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(15,23,42,0.1)] sm:p-7"
             >
               <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(255,255,255,0.42),transparent)]" />
 
               <div className="relative z-10">
-                <div className="flex items-center gap-1 text-[#2f80ff]">
+                <div className="flex items-center justify-center gap-1 text-[#2f80ff]">
                   <span className="text-lg leading-none">&quot;</span>
                   <span className="text-lg leading-none">&quot;</span>
                   <span className="text-lg leading-none">&quot;</span>
@@ -913,7 +954,7 @@ function TestimonialsSection() {
                   {testimonial.quote}
                 </p>
 
-                <div className="mt-8 flex items-center gap-4">
+                <div className="mt-8 flex items-center justify-center gap-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-sm font-semibold text-slate-700">
                     {testimonial.name
                       .split(" ")
@@ -921,7 +962,7 @@ function TestimonialsSection() {
                       .join("")
                       .slice(0, 2)}
                   </div>
-                  <div>
+                  <div className="text-center">
                     <p className="font-semibold text-slate-950">
                       {testimonial.name}
                     </p>
@@ -986,10 +1027,10 @@ function FooterFeatureGrid() {
 
 function FooterSection() {
   return (
-    <footer id="contact" className="px-4 pb-4 pt-12 sm:px-6 lg:px-8">
+    <footer id="contact" className="px-3 pb-4 pt-12 sm:px-5 lg:px-6">
       <Reveal className="mx-auto max-w-[1400px]">
-        <div className="flex flex-col gap-6 border-b border-black/6 px-6 py-5 text-black sm:px-8 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-wrap items-center gap-4 text-sm text-black/70">
+        <div className="flex flex-col items-center gap-6 border-b border-black/6 px-3 py-5 text-center text-black sm:px-5 lg:px-6">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-black/70">
             <div className="flex items-center gap-3">
               <p className="text-lg font-semibold tracking-tight text-black">Ordentra</p>
             </div>
@@ -1002,7 +1043,7 @@ function FooterSection() {
             </a>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-3">
             {utilityButtons.map(({ label, icon: Icon }) => (
               <button
                 key={label}
@@ -1023,19 +1064,19 @@ function FooterSection() {
           </div>
         </div>
 
-        <div className="px-6 pb-3 pt-8 text-black sm:px-8 sm:pb-4 sm:pt-10">
+        <div className="px-3 pb-3 pt-8 text-black sm:px-5 sm:pb-4 sm:pt-10 lg:px-6">
           <div className="footer-copy flex w-full flex-col gap-10">
             <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start">
-              <div className="footer-copy">
+              <div className="footer-copy text-center">
                 <p className="mb-4 inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em]">
                   Built for modern operations
                 </p>
-                <h2 className="footer-headline max-w-[32rem] text-4xl font-semibold tracking-[-0.04em] sm:max-w-[36rem] sm:text-5xl sm:leading-[1.02]">
+                <h2 className="footer-headline mx-auto max-w-[32rem] text-4xl font-semibold tracking-[-0.04em] sm:max-w-[36rem] sm:text-5xl sm:leading-[1.02]">
                   Stay in control of operations, approvals, and spend.
                 </h2>
               </div>
 
-              <div className="footer-copy grid grid-cols-1 gap-8 sm:grid-cols-2">
+              <div className="footer-copy grid grid-cols-1 gap-8 text-center sm:grid-cols-2">
                 {footerLinkGroups.map((group) => (
                   <div key={group.title}>
                     <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em]">
@@ -1046,7 +1087,7 @@ function FooterSection() {
                         <li key={link.label}>
                           <a
                             href={link.href}
-                            className="inline-flex items-center gap-2 text-[15px] transition hover:text-black"
+                            className="inline-flex items-center justify-center gap-2 text-[15px] transition hover:text-black"
                           >
                             <ArrowRight className="h-4 w-4" />
                             <span>{link.label}</span>
@@ -1063,15 +1104,15 @@ function FooterSection() {
 
             <div className="footer-copy pt-2 text-center">
               <div className="overflow-hidden">
-                <p className="text-[4.8rem] font-semibold leading-none tracking-[-0.09em] text-black sm:text-[7rem] md:text-[9rem] lg:text-[12rem]">
+                <p className="footer-wordmark w-full whitespace-nowrap text-[4.8rem] font-semibold leading-none text-black sm:text-[7rem] md:text-[9rem] lg:text-[12rem]">
                   Ordentra
                 </p>
               </div>
             </div>
 
-            <div className="footer-copy flex flex-col gap-4 border-t border-black/6 pt-5 text-sm sm:flex-row sm:items-center sm:justify-between">
+            <div className="footer-copy flex flex-col items-center gap-4 border-t border-black/6 pt-5 text-center text-sm">
               <p>&copy; 2026 Ordentra Technologies Pvt. Ltd. All rights reserved.</p>
-              <div className="flex flex-wrap items-center gap-5">
+              <div className="flex flex-wrap items-center justify-center gap-5">
                 <a href="#contact" className="transition hover:text-black">
                   Privacy Policy
                 </a>
@@ -1102,25 +1143,44 @@ function FooterSection() {
 }
 
 export default function Home() {
+  const cursorGlowRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    const root = document.documentElement;
+    const glow = cursorGlowRef.current;
+
+    if (!glow) {
+      return;
+    }
+
+    const target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const current = { x: target.x, y: target.y };
+    let frameId = 0;
 
     const handlePointerMove = (event: PointerEvent) => {
-      root.style.setProperty("--cursor-x", `${event.clientX}px`);
-      root.style.setProperty("--cursor-y", `${event.clientY}px`);
+      target.x = event.clientX;
+      target.y = event.clientY;
+    };
+
+    const animateGlow = () => {
+      current.x += (target.x - current.x) * 0.22;
+      current.y += (target.y - current.y) * 0.22;
+      glow.style.transform = `translate3d(${current.x - 256}px, ${current.y - 256}px, 0)`;
+      frameId = window.requestAnimationFrame(animateGlow);
     };
 
     window.addEventListener("pointermove", handlePointerMove);
+    frameId = window.requestAnimationFrame(animateGlow);
 
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
+      window.cancelAnimationFrame(frameId);
     };
   }, []);
 
   return (
     <main className="relative isolate min-h-screen">
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="cursor-glow" />
+        <div ref={cursorGlowRef} className="cursor-glow" />
       </div>
 
       <div className="relative z-10">
